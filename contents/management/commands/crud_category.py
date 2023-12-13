@@ -3,7 +3,7 @@ from contents.models import Category
 
 
 class Command(BaseCommand):
-    help = "create category"
+    help = "CRUD category"
 
     def add_arguments(self, parser):
         parser.add_argument("--CRUD", type=str, help="CRUD actions for category model")
