@@ -13,10 +13,19 @@ class CategoryViewSet(viewsets.ViewSet):
 
     permission_classes = (IsAuthenticated,)
     queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
+    def create(self, request):
+        """Creates a new category."""
+        srz_data = self.serializer_class(data=request.data)
+        if srz_data.is_valid():
+            srz_data.save()
+            return Response(srz_data.data, status=status.HTTP_201_CREATED)
+        return Response(srz_data.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     def list(self, request):
         """Retrieves a list of all categories."""
-        srz_data = CategorySerializer(instance=self.queryset, many=True)
+        srz_data = self.serializer_class(instance=self.queryset, many=True)
         return Response(data=srz_data.data)
 
     def partial_update(self, request, category_id):
