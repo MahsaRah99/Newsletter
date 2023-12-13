@@ -5,7 +5,7 @@ from django.db.models import Manager
 
 
 class Category(models.Model):
-    name = models.CharField(verbose_name=_("Name"), max_length=100)
+    name = models.CharField(verbose_name=_("Name"), max_length=100, unique=True)
     parent = models.ForeignKey(
         "self",
         on_delete=models.PROTECT,
